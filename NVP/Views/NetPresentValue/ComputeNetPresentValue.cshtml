@@ -1,0 +1,24 @@
+﻿@model IEnumerable<NVP.DTO.NPVPerDiscountRateDTO>
+@using NVP.DTO;
+
+<style>
+    .NPVPerDiscountRateItem {
+        font-size: 1.1em;
+        padding: 2px 0;
+        width: 400px;
+    }
+</style>
+
+@foreach (NPVPerDiscountRateDTO item in Model)
+{
+    <div class="NPVPerDiscountRateItem flexRow width100Percent">
+        <div class="flexRow width50Percent">
+            <div class="flexAlignItemsCenter width70Percent">Discount Rate: </div>
+            <div class="flexAlignItemsCenter width30Percent">@item.DiscountRate.ToString("0.##")</div>
+        </div>
+        <div class="flexRow width50Percent">
+            <div class="flexAlignItemsCenter width70Percent">Net Present Value: </div>
+            <div class="flexAlignItemsCenter width30Percent">@item.NPV.ToString("0.##")</div>
+        </div>
+    </div>
+}

@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TakeHomeExamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NPV_HISTORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="INITIAL_VALUE" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="LOWER_BOUND_DISCOUNT_RATE" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UPPER_BOUND_DISCOUNT_RATE" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="INCREMENT" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CREATED_DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NPV_HISTORY_CASHFLOWS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NPV_HISTORY_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CASH_FLOW" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ORDER" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_NPV_HISTORY_CASHFLOWS_NPV_HISTORY">
+          <End Role="NPV_HISTORY" Type="Self.NPV_HISTORY" Multiplicity="1" />
+          <End Role="NPV_HISTORY_CASHFLOWS" Type="Self.NPV_HISTORY_CASHFLOWS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPV_HISTORY">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NPV_HISTORY_CASHFLOWS">
+              <PropertyRef Name="NPV_HISTORY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TakeHomeExamModelStoreContainer">
+          <EntitySet Name="NPV_HISTORY" EntityType="Self.NPV_HISTORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NPV_HISTORY_CASHFLOWS" EntityType="Self.NPV_HISTORY_CASHFLOWS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_NPV_HISTORY_CASHFLOWS_NPV_HISTORY" Association="Self.FK_NPV_HISTORY_CASHFLOWS_NPV_HISTORY">
+            <End Role="NPV_HISTORY" EntitySet="NPV_HISTORY" />
+            <End Role="NPV_HISTORY_CASHFLOWS" EntitySet="NPV_HISTORY_CASHFLOWS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TakeHomeExamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TakeHomeExamEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="NPV_HISTORY" EntityType="TakeHomeExamModel.NPV_HISTORY" />
+          <EntitySet Name="NPV_HISTORY_CASHFLOWS" EntityType="TakeHomeExamModel.NPV_HISTORY_CASHFLOWS" />
+          <AssociationSet Name="FK_NPV_HISTORY_CASHFLOWS_NPV_HISTORY" Association="TakeHomeExamModel.FK_NPV_HISTORY_CASHFLOWS_NPV_HISTORY">
+            <End Role="NPV_HISTORY" EntitySet="NPV_HISTORY" />
+            <End Role="NPV_HISTORY_CASHFLOWS" EntitySet="NPV_HISTORY_CASHFLOWS" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="NPV_HISTORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="INITIAL_VALUE" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="LOWER_BOUND_DISCOUNT_RATE" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="UPPER_BOUND_DISCOUNT_RATE" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="INCREMENT" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CREATED_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="NPV_HISTORY_CASHFLOWS" Relationship="TakeHomeExamModel.FK_NPV_HISTORY_CASHFLOWS_NPV_HISTORY" FromRole="NPV_HISTORY" ToRole="NPV_HISTORY_CASHFLOWS" />
+        </EntityType>
+        <EntityType Name="NPV_HISTORY_CASHFLOWS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="NPV_HISTORY_ID" Type="Guid" Nullable="false" />
+          <Property Name="CASH_FLOW" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ORDER" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NPV_HISTORY" Relationship="TakeHomeExamModel.FK_NPV_HISTORY_CASHFLOWS_NPV_HISTORY" FromRole="NPV_HISTORY_CASHFLOWS" ToRole="NPV_HISTORY" />
+        </EntityType>
+        <Association Name="FK_NPV_HISTORY_CASHFLOWS_NPV_HISTORY">
+          <End Type="TakeHomeExamModel.NPV_HISTORY" Role="NPV_HISTORY" Multiplicity="1" />
+          <End Type="TakeHomeExamModel.NPV_HISTORY_CASHFLOWS" Role="NPV_HISTORY_CASHFLOWS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NPV_HISTORY">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NPV_HISTORY_CASHFLOWS">
+              <PropertyRef Name="NPV_HISTORY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TakeHomeExamModelStoreContainer" CdmEntityContainer="TakeHomeExamEntities">
+          <EntitySetMapping Name="NPV_HISTORY">
+            <EntityTypeMapping TypeName="TakeHomeExamModel.NPV_HISTORY">
+              <MappingFragment StoreEntitySet="NPV_HISTORY">
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="INCREMENT" ColumnName="INCREMENT" />
+                <ScalarProperty Name="UPPER_BOUND_DISCOUNT_RATE" ColumnName="UPPER_BOUND_DISCOUNT_RATE" />
+                <ScalarProperty Name="LOWER_BOUND_DISCOUNT_RATE" ColumnName="LOWER_BOUND_DISCOUNT_RATE" />
+                <ScalarProperty Name="INITIAL_VALUE" ColumnName="INITIAL_VALUE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NPV_HISTORY_CASHFLOWS">
+            <EntityTypeMapping TypeName="TakeHomeExamModel.NPV_HISTORY_CASHFLOWS">
+              <MappingFragment StoreEntitySet="NPV_HISTORY_CASHFLOWS">
+                <ScalarProperty Name="ORDER" ColumnName="ORDER" />
+                <ScalarProperty Name="CASH_FLOW" ColumnName="CASH_FLOW" />
+                <ScalarProperty Name="NPV_HISTORY_ID" ColumnName="NPV_HISTORY_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

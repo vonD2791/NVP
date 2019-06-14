@@ -1,0 +1,53 @@
+﻿@model IEnumerable<NVP.DTO.NPVDTO>
+
+<style>
+    .historyItemContainer {
+        border-bottom-style: solid;
+        border-bottom-color: rgba(128, 128, 128, 0.3);
+        border-bottom-width: 1px;
+        border-top-style: solid;
+        border-top-color: rgba(128, 128, 128, 0.3);
+        border-top-width: 1px;
+        padding: 10px 5px;
+        cursor: pointer;
+    }
+    .selectedHistory {
+        background-color: orange;
+    }
+</style>
+
+@foreach (var item in Model)
+{
+    <div id="@item.Id" class="historyItemContainer flexJustifyContentCenter width100Percent" 
+         initialValue="@item.initialValue"
+         lowerBoundDiscountRate="@item.lowerBoundDiscountRate"
+         upperBoundDiscountRate="@item.upperBoundDiscountRate"
+         increment="@item.increment"
+         cashFlows='@String.Join(",", item.cashFlows)'
+         >
+        @item.createdDate.ToString("MM/dd/yyyy hh:mm:ss tt")
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.historyItemContainer').on('click', function () {
+            $('.historyItemContainer').each(function () {
+                $(this).removeClass('selectedHistory');
+            });
+
+            var $this = $(this);
+            if (!$this.hasClass('selectedHistory')) {
+                $this.addClass('selectedHistory');
+                SetFormValues({
+                    NPVId: $this.attr('id'),
+                    initialValue: $this.attr('initialValue'),
+                    lowerBoundDiscountRate: $this.attr('lowerBoundDiscountRate'),
+                    upperBoundDiscountRate: $this.attr('upperBoundDiscountRate'),
+                    increment: $this.attr('increment'),
+                    cashFlows: $this.attr('cashFlows')
+                });
+            }
+        })
+    });
+</script>
