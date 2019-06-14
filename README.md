@@ -1,6 +1,5 @@
 # NVP
 
-Description
   This is a take home exam given by the visual risk to assess my skill in web development. 
   The application can compute the Net Present Value of a given range of discounts. It can also store the calculations made by its users.
 
