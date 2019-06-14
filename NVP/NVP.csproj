@@ -227,6 +227,7 @@
     <Content Include="Models\NVPModel.edmx.diagram">
       <DependentUpon>NVPModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Database\TakeHomeExam.bak" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
