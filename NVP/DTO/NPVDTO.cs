@@ -12,7 +12,5 @@ namespace NVP.DTO
         public decimal increment { get; set; }
         public List<decimal> cashFlows { get; set; }
         public DateTime createdDate { get; set; }
-
-        public List<NPVPerDiscountRateDTO> nPVPerDiscountRateDTOs { get; set; }
     }
 }

@@ -18,11 +18,11 @@ namespace NVP.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public bool AddToHistory(decimal initialValue, decimal lowerBoundDiscountRate, decimal upperBoundDiscountRate, decimal increment, List<decimal> cashFlows)
+        public bool AddToHistory(NetPresentValueRequest netPresentValueRequest)
         {
             List<NPV_HISTORY_CASHFLOWS> lstCashFlows = new List<NPV_HISTORY_CASHFLOWS>();
             int counter = 1;
-            foreach (decimal cashFlow in cashFlows)
+            foreach (decimal cashFlow in netPresentValueRequest.cashFlows)
             {
                 lstCashFlows.Add(new NPV_HISTORY_CASHFLOWS()
                 {
@@ -36,10 +36,10 @@ namespace NVP.Services
             NPV_HISTORY npv_history = new NPV_HISTORY()
             {
                 ID = Guid.NewGuid(),
-                INITIAL_VALUE = initialValue,
-                LOWER_BOUND_DISCOUNT_RATE = lowerBoundDiscountRate,
-                UPPER_BOUND_DISCOUNT_RATE = upperBoundDiscountRate,
-                INCREMENT = increment,
+                INITIAL_VALUE = netPresentValueRequest.initialValue,
+                LOWER_BOUND_DISCOUNT_RATE = netPresentValueRequest.lowerBoundDiscountRate,
+                UPPER_BOUND_DISCOUNT_RATE = netPresentValueRequest.upperBoundDiscountRate,
+                INCREMENT = netPresentValueRequest.increment,
                 CREATED_DATE = DateTime.Now,
                 NPV_HISTORY_CASHFLOWS = lstCashFlows
             };
@@ -47,10 +47,10 @@ namespace NVP.Services
             unitOfWork.NPVHistory.Add(npv_history);
             return unitOfWork.SaveChanges() > 0;
         }
-
         public decimal ComputeNetPresentValue(List<decimal> cashFlows, decimal initialValue, decimal discountRate)
         {
             decimal newPresentValue = 0;
+            discountRate /= 100;
             discountRate = 1 + discountRate;
             int timePeriod = 0;
             foreach (decimal cashFlow in cashFlows)
@@ -71,7 +71,7 @@ namespace NVP.Services
 
         public IEnumerable<NPVDTO> GetNPVDTOHistory()
         {
-            IEnumerable<NPVDTO> result = unitOfWork.NPVHistory.GetAll().Select(x => new NPVDTO
+            return unitOfWork.NPVHistory.GetAll().Select(x => new NPVDTO
             {
                 Id = x.ID,
                 initialValue = x.INITIAL_VALUE,
@@ -81,20 +81,6 @@ namespace NVP.Services
                 createdDate = x.CREATED_DATE,
                 cashFlows = x.NPV_HISTORY_CASHFLOWS.OrderBy(o => o.ORDER).Select(y => y.CASH_FLOW).ToList()
             });
-
-            foreach (NPVDTO nPVDTO in result)
-            {
-                nPVDTO.nPVPerDiscountRateDTOs = ComputeNetPresentValues(new NetPresentValueRequest()
-                {
-                    initialValue = nPVDTO.initialValue,
-                    lowerBoundDiscountRate = nPVDTO.lowerBoundDiscountRate,
-                    upperBoundDiscountRate =nPVDTO.upperBoundDiscountRate,
-                    increment = nPVDTO.increment,
-                    cashFlows = nPVDTO.cashFlows
-                }).ToList();
-
-                yield return nPVDTO;
-            }
         }
         public IEnumerable<NPVPerDiscountRateDTO> ComputeNetPresentValues(NetPresentValueRequest netPresentValueRequest)
         {

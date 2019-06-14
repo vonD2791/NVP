@@ -1,8 +1,6 @@
-﻿using NVP.DTO;
-using NVP.Requests;
+﻿using NVP.Requests;
 using NVP.Services.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using System.Web.Mvc;
@@ -31,8 +29,7 @@ namespace NVP.Controllers
             {
                 using (TransactionScope tran = new TransactionScope())
                 {
-                    netPresentValueService.AddToHistory(netPresentValueRequest.initialValue, netPresentValueRequest.lowerBoundDiscountRate, netPresentValueRequest.upperBoundDiscountRate,
-                        netPresentValueRequest.increment, netPresentValueRequest.cashFlows);
+                    netPresentValueService.AddToHistory(netPresentValueRequest);
                     tran.Complete();
                 }
             }

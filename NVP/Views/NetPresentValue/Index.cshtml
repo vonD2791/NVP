@@ -151,16 +151,16 @@
     $(document).ready(function () {
         $.ajaxSetup({ cache: false });
         //$('#NPVCalculatorInitialValue').val(250000);
-        //$('#NPVCalculatorLowerBoundDiscountRate').val(0.1);
-        //$('#NPVCalculatorUpperBoundDiscountRate').val(0.1);
+        //$('#NPVCalculatorLowerBoundDiscountRate').val(10);
+        //$('#NPVCalculatorUpperBoundDiscountRate').val(10);
         //$('#NPVCalculatorIncrement').val(0);
         //$('#NPVCalculatorCashFlows').val('100000, 150000, 200000, 250000, 300000');
 
-        //$('#NPVCalculatorInitialValue').val(10000);
-        //$('#NPVCalculatorLowerBoundDiscountRate').val(0.0);
-        //$('#NPVCalculatorUpperBoundDiscountRate').val(0.5);
-        //$('#NPVCalculatorIncrement').val(0.25);
-        //$('#NPVCalculatorCashFlows').val('1000, 1500, 2000');
+        $('#NPVCalculatorInitialValue').val(10000);
+        $('#NPVCalculatorLowerBoundDiscountRate').val(1.0);
+        $('#NPVCalculatorUpperBoundDiscountRate').val(1.5);
+        $('#NPVCalculatorIncrement').val(0.25);
+        $('#NPVCalculatorCashFlows').val('1000, 1500, 2000');
 
         GetHistory({ selectFirstItem: false });
 

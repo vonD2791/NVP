@@ -16,11 +16,6 @@ textarea {
     max-width: 280px;
 }
 
-
-.borderIt {
-    border : solid black 1px;
-}
-
 /* Global CSS */
 .flexColumn {
     display: flex;
