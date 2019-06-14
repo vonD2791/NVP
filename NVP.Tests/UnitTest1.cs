@@ -18,7 +18,9 @@ namespace NVP.Tests
             {
                 100000, 150000, 200000, 250000, 300000
             },
-            250000, Convert.ToDecimal(0.10));
+            250000, 10);
+
+            Assert.AreEqual(decimal.Round(npv, 2), new decimal(472168.75));
         }
     }
 }
